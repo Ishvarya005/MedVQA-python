@@ -24,6 +24,7 @@ fine_tuning_data = [{'question': 'Where is HD caused?',
 
     {'question': 'What are the symptoms when HD starts late in life?',
      'context': 'When HD starts late in life, chorea tends to be stronger, whereas slowness and stiffness are less prominent. If HD occurs late in life, it is likely to be more difficult to establish a family history because the individual’s parents may have already died, perhaps before they themselves showed signs of the disease.'},
+<<<<<<< HEAD
     
     {'question': 'When do HD symptoms appear?',
       'context':'Most individuals develop the disease during mid-adult life, i.e. between 35 and 55 years of age. Approximately 10% of people develop symptoms prior to the age of 20 (juvenile HD) and another 10% after the age of 55. More rarely, symptoms appear before the age of 10 years (infantile HD).'},
@@ -48,6 +49,10 @@ fine_tuning_data = [{'question': 'Where is HD caused?',
     {'question':'Can HD skip a generation?'},
     {'context':'If a person does not inherit the HD gene, he/she will not develop the disease and will not pass HD on to the next generation. The HD gene cannot skip a generation, but the symptoms can. This situation may occur if the gene carrier dies before the symptoms appear, so that it becomes more difficult to establish a family history.'},
      {'question': 'Is juvenile HD always inherited from the father?',
+=======
+
+    {'question': 'Is juvenile HD always inherited from the father?',
+>>>>>>> origin/master
      'context': 'Juvenile Huntington’s disease (HD) is primarily inherited from fathers (75%) or mothers (25%). When the gene has 36 or more CAG units, the repeats are more likely to change in size, particularly when inherited from the father, leading to earlier symptom onset due to a phenomenon known as anticipation.'},
 
     {'question': 'If a man carries the HD gene, does this mean that his children will develop juvenile HD?',
@@ -152,7 +157,11 @@ fine_tuning_data = [{'question': 'Where is HD caused?',
     
     {'question': 'Are there any strategies on how to better cope with HD?',
      'context': 'A better understanding of the behavioural and cognitive impairments may help develop strategies to accommodate these changes and to maintain a warm relationship with people suffering from HD. You can also get important information and valuable advice from both HD specialists and lay organizations in your respective country.'}
+<<<<<<< HEAD
    ]
+=======
+         ]
+>>>>>>> origin/master
 
 # Augment data with paraphrased questions
 augmented_data = []

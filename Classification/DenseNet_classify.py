@@ -5,7 +5,7 @@ from tensorflow.keras import layers, models, callbacks
 import numpy as np
 
 # Define the paths to your dataset
-dataset_path = "D:\\Sem-3\\Intro to Python\\Project\\Augmentation\\Datasets"  # Change this to the path of your dataset
+dataset_path = "C:\\Users\\kavya\\Downloads\\MedVQA-python-master\\Augmentation\\Datasets"  # Change this to the path of your dataset
 train_data_dir = os.path.join(dataset_path, "TrainingData")
 
 # Use the same directory for both training and test data
