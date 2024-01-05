@@ -10,8 +10,7 @@ model = TFAutoModelForQuestionAnswering.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # Fine-tuning data (replace this with your own dataset)
-fine_tuning_data = [
-    {'question': 'Where is HD caused?',
+fine_tuning_data = [{'question': 'Where is HD caused?',
      'context': 'The most vulnerable part of the brain in HD is called the striatum which is prone to HD. The striatum is a relatively small structure, deep underneath the wrinkly outside part of the brain, which is called the cortex.During the course of HD, cells in both the striatum and cortex shrink, dysfunction and eventually die. Study after study, investigating many hundreds of volunteers, has found that the striatum is the first location in the brain that shrinks in people carrying the HD mutation'},
     
     {'question': 'What causes HD?',
@@ -26,30 +25,8 @@ fine_tuning_data = [
 
     {'question': 'What are the symptoms when HD starts late in life?',
      'context': 'When HD starts late in life, chorea tends to be stronger, whereas slowness and stiffness are less prominent. If HD occurs late in life, it is likely to be more difficult to establish a family history because the individual’s parents may have already died, perhaps before they themselves showed signs of the disease.'},
-    
-    {'question': 'When do HD symptoms appear?',
-      'context':'Most individuals develop the disease during mid-adult life, i.e. between 35 and 55 years of age. Approximately 10% of people develop symptoms prior to the age of 20 (juvenile HD) and another 10% after the age of 55. More rarely, symptoms appear before the age of 10 years (infantile HD).'},
-    { 'question':'How long does HD last?',
-     'context':'HD is a fatal illness, developing at a gradual and relentless rate. The average duration of the disease is 15-20 years, but this varies between individuals.'},
-    {'question':'How do I know if I have HD?',
-      'context':'If you suspect that you have HD, you should consult an HD specialist (usually a neurologist) for diagnostic testing.'},
-    {'question':'How common is HD?'},
-    { 'context':'HD is a rare disease which affects up to approximately 1 in 10,000 people in most European countries. In Germany for instance, about 10,000 people have HD and a further 50,000 are considered at risk for inheriting the HD gene because they have (or had) a parent with HD. Men and women are equally likely to inherit the gene and develop the disease.'},
-     {'question':'How does HD start?'},
-    { 'context':'The first subtle signs may be slight personality or mood changes. Forgetfulness, clumsiness and random, brief, “fidgeting” movements of the fingers ortoes might also be a hint. Often, medical advice is not sought during these very early stages of the disease, and some years may pass by before the disorder is medically diagnosed. Hence, the onset of HD is described as “insidious”, as the disease emerges very slowly.'},
-    {'question':'What are the symptoms of HD?'},
-    { 'context':'The first subtle signs may be slight personality or mood changes. Forgetfulness, clumsiness and random, brief, “fidgeting” movements of the fingers ortoes might also be a hint. Often, medical advice is not sought during these very early stages of the disease, and some years may pass by before the disorder is medically diagnosed. Hence, the onset of HD is described as “insidious”, as the disease emerges very slowly.'},
-    {'question':'How does HD progress?'},
-    { 'context':'HD can be divided into five stages: • Early Stage: The person is diagnosed as having HD and can function fully both at home and work. Early Intermediate Stage: The person remains employable but at a lower capacity. He/she is still able to manage daily affairs despite some difficulties.  Late Intermediate Stage: The person can no longer work and manage household responsibilities. He/she needs considerable help or supervision to handle daily financial affairs. Other daily activities may be slightly difficult but usually only require minor help. Early Advanced Stage: The person is no longer independent in daily activities but is still able to live at home supported by the family or professional carers. Advanced Stage: The person requires complete support in daily activities and professional nursing care is usually needed.'},    
-    {'question':'Do the symptoms of juvenile HD differ from those of the adult form?'},
-    { 'context':'When HD starts early in life (i.e. under the age of 20), chorea is less prominent whereas slowness of movement (bradykinesia) and stiffness become more prevalent. In most cases, the rate of progression of juvenile HD tends to be faster than in the adult form. Early features of juvenile HD include strong behavioural changes, learning problems, decline at school and speech problems. Epileptic seizures occasionally occur in HD, being more common among young patients.'},
-     {'question':'What are the symptoms when HD starts late in life?'},
-    {'context':'When HD starts late in life, chorea tends to be stronger, whereas slowness and stiffness are less prominent. If HD occurs late in life, it is likely to be more difficult to establish a family history because the individual’s parent  may have already died, perhaps before they themselves showed signs of the disease.'},
-    {'question':'What type of disease is HD'},
-    {'context':'HD is an autosomal genetic disease. This means that it may affect both men and women equally because the abnormal gene is located on a chromosome which is the same in both sexes (autosome or non-sex chromosome).'},
-    {'question':'Can HD skip a generation?'},
-    {'context':'If a person does not inherit the HD gene, he/she will not develop the disease and will not pass HD on to the next generation. The HD gene cannot skip a generation, but the symptoms can. This situation may occur if the gene carrier dies before the symptoms appear, so that it becomes more difficult to establish a family history.'},
-     {'question': 'Is juvenile HD always inherited from the father?',
+
+    {'question': 'Is juvenile HD always inherited from the father?',
      'context': 'Juvenile Huntington’s disease (HD) is primarily inherited from fathers (75%) or mothers (25%). When the gene has 36 or more CAG units, the repeats are more likely to change in size, particularly when inherited from the father, leading to earlier symptom onset due to a phenomenon known as anticipation.'},
 
     {'question': 'If a man carries the HD gene, does this mean that his children will develop juvenile HD?',
@@ -154,26 +131,14 @@ fine_tuning_data = [
     
     {'question': 'Are there any strategies on how to better cope with HD?',
      'context': 'A better understanding of the behavioural and cognitive impairments may help develop strategies to accommodate these changes and to maintain a warm relationship with people suffering from HD. You can also get important information and valuable advice from both HD specialists and lay organizations in your respective country.'}
-   ]
+         ]
+
 nlp = spacy.load("en_core_web_sm")
 
 def process_text(text):
     doc = nlp(text)
     return " ".join([token.lemma_ for token in doc if not token.is_stop and not token.is_punct])
 
-# def find_similar_question(user_input, questions):
-#     processed_input = process_text(user_input)
-    
-#     processed_questions = [process_text(question) for question in questions]
-    
-#     vectorizer = TfidfVectorizer()
-#     question_vectors = vectorizer.fit_transform([processed_input] + processed_questions)
-    
-#     similarities = cosine_similarity(question_vectors[0], question_vectors[1:])[0]
-    
-#     most_similar_index = similarities.argmax()
-    
-#     return questions[most_similar_index]
 def find_similar_question(user_input, data):
     if 'question' in data[0]:
         # If the data is in the expected format (list of dictionaries)
@@ -181,7 +146,7 @@ def find_similar_question(user_input, data):
         contexts = [item['context'] for item in data]
     else:
         # If the data is in the format [ {'question':'...', 'context': '...'},...]
-        questions = [item['questions'] for item in data]
+        questions = [item['question'] for item in data]
         contexts = [item['context'] for item in data]
 
     processed_input = process_text(user_input)
@@ -195,12 +160,17 @@ def find_similar_question(user_input, data):
 
     return questions[most_similar_index]
 
-
 # Ask user for input
 user_input = input("Enter your question: ")
+for item in fine_tuning_data:
+    try:
+        question = item['question']
+        print("Question:", question)
+    except KeyError:
+        print("Error: 'question' key not found in the following dictionary:", item)
 
 # Find the most similar question
-similar_question = find_similar_question(user_input, [item['question'] for item in fine_tuning_data])
+similar_question = find_similar_question(user_input, fine_tuning_data)
 
 # Find the corresponding context for the most similar question
 similar_context = next(item['context'] for item in fine_tuning_data if item['question'] == similar_question)
@@ -208,8 +178,12 @@ similar_context = next(item['context'] for item in fine_tuning_data if item['que
 # Tokenize and preprocess the user input and similar context
 tokenized_input = tokenizer(user_input, similar_context, padding=True, truncation=True, return_tensors='tf')
 
+# Extract input tensors
+input_ids = tokenized_input['input_ids']
+attention_mask = tokenized_input['attention_mask']
+
 # Get model predictions
-predictions = model.predict(tokenized_input)
+predictions = model.predict({'input_ids': input_ids, 'attention_mask': attention_mask})
 
 # Extract answer from predictions
 answer_start = tf.argmax(predictions.start_logits, axis=1).numpy()[0]
